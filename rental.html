@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Indian Car Rental - Explore Our Fleet</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(26, 26, 26, 0.9);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #ff6b6b;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Hero section styles */
+        .hero {
+            background-image: url('https://source.unsplash.com/1600x900/?india,car');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+            margin-top: 60px;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        /* Filter section styles */
+        .filter-section {
+            background-color: #fff;
+            padding: 2rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .filter-group select,
+        .filter-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .filter-button {
+            background-color: #ff6b6b;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .filter-button:hover {
+            background-color: #ff4757;
+        }
+
+        /* Car grid styles */
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .car-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+
+        .car-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .car-price {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .book-button {
+            display: block;
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #ff6b6b;
+            color: #fff;
+            text-align: center;
+            text-decoration: none;
+            border: none;
+            border-radius: 4px;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .book-button:hover {
+            background-color: #ff4757;
+        }
+
+        /* Pagination styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+
+        .pagination button {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            margin: 0 0.25rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .pagination button:hover {
+            background-color: #f0f0f0;
+        }
+
+        .pagination button.active {
+            background-color: #ff6b6b;
+            color: #fff;
+            border-color: #ff6b6b;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-section {
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff6b6b;
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #ff6b6b;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 1s ease;
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 1s ease;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .filter-form {
+                flex-direction: column;
+            }
+
+            .filter-group {
+                width: 100%;
+            }
+
+            .car-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">Indian<span>CarRental</span></div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#cars">Cars</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Explore India's Finest Cars</h1>
+                <p>Choose from over 100 premium Indian cars for your next adventure</p>
+            </div>
+        </section>
+
+        <section id="filter" class="filter-section">
+            <div class="container">
+                <form class="filter-form">
+                    <div class="filter-group">
+                        <label for="brand">Brand</label>
+                        <select id="brand" name="brand">
+                            <option value="">All Brands</option>
+                            <option value="Maruti Suzuki">Maruti Suzuki</option>
+                            <option value="Hyundai">Hyundai</option>
+                            <option value="Tata">Tata</option>
+                            <option value="Mahindra">Mahindra</option>
+                            <option value="Honda">Honda</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="type">Car Type</label>
+                        <select id="type" name="type">
+                            <option value="">All Types</option>
+                            <option value="Hatchback">Hatchback</option>
+                            <option value="Sedan">Sedan</option>
+                            <option value="SUV">SUV</option>
+                            <option value="MUV">MUV</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="fuel">Fuel Type</label>
+                        <select id="fuel" name="fuel">
+                            <option value="">All Fuel Types</option>
+                            <option value="Petrol">Petrol</option>
+                            <option value="Diesel">Diesel</option>
+                            <option value="CNG">CNG</option>
+                            <option value="Electric">Electric</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label for="price">Max Price (₹/day)</label>
+                        <input type="number" id="price" name="price" min="0" step="100" placeholder="Max price">
+                    </div>
+                    <button type="submit" class="filter-button">Apply Filters</button>
+                </form>
+            </div>
+        </section>
+
+        <section id="cars" class="car-grid-section">
+            <div class="container">
+                <div class="car-grid">
+                    <!-- Car cards will be dynamically inserted here -->
+                </div>
+                <div class="pagination">
+                    <!-- Pagination buttons will be dynamically inserted here -->
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>Indian CarRental is your trusted partner for exploring India's diverse landscapes. We offer a wide range of Indian cars to suit your travel needs.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#cars">Cars</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Us</h3>
+                    <p>123 Car Street, Mumbai, India</p>
+                    <p>Phone: +91 123 456 7890</p>
+                    <p>Email: info@indiancarrental.com</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@glidejs/glide"></script>
+    <script>
+        // Car data (100+ Indian cars)
+        const cars = [
+            { id: 1, brand: 'Maruti Suzuki', model: 'Swift', type: 'Hatchback', fuel: 'Petrol', price: 1200, image: 'https://source.unsplash.com/featured/?MarutiSuzuki,Swift' },
+            { id: 2, brand: 'Hyundai', model: 'Creta', type: 'SUV', fuel: 'Diesel', price: 2000, image: 'https://source.unsplash.com/featured/?Hyundai,Creta' },
+            { id: 3, brand: 'Tata', model: 'Nexon', type: 'SUV', fuel: 'Petrol', price: 1800, image: 'https://source.unsplash.com/featured/?Tata,Nexon' },
+            { id: 4, brand: 'Mahindra', model: 'XUV500', type: 'SUV', fuel: 'Diesel', price: 2500, image: 'https://source.unsplash.com/featured/?Mahindra,XUV500' },
+            { id: 5, brand: 'Honda', model: 'City', type: 'Sedan', fuel: 'Petrol', price: 1700, image: 'https://source.unsplash.com/featured/?Honda,City' },
+            { id: 6, brand: 'Maruti Suzuki', model: 'Baleno', type: 'Hatchback', fuel: 'Petrol', price: 1300, image: 'https://source.unsplash.com/featured/?MarutiSuzuki,Baleno' },
+            { id: 7, brand: 'Hyundai', model: 'Venue', type: 'SUV', fuel: 'Petrol', price: 1600, image: 'https://source.unsplash.com/featured/?Hyundai,Venue' },
+            { id: 8, brand: 'Tata', model: 'Harrier', type: 'SUV', fuel: 'Diesel', price: 2200, image: 'https://source.unsplash.com/featured/?Tata,Harrier' },
+            { id: 9, brand: 'Mahindra', model: 'Scorpio', type: 'SUV', fuel: 'Diesel', price: 2100, image: 'https://source.unsplash.com/featured/?Mahindra,Scorpio' },
+            { id: 10, brand: 'Honda', model: 'Amaze', type: 'Sedan', fuel: 'Petrol', price: 1400, image: 'https://source.unsplash.com/featured/?Honda,Amaze' },
+            // Add 90+ more car objects here to reach over 100 cars
+            // Example:
+            { id: 11, brand: 'Maruti Suzuki', model: 'Dzire', type: 'Sedan', fuel: 'Petrol', price: 1500, image: 'https://source.unsplash.com/featured/?MarutiSuzuki,Dzire' },
+            { id: 12, brand: 'Hyundai', model: 'i20', type: 'Hatchback', fuel: 'Petrol', price: 1400, image: 'https://source.unsplash.com/featured/?Hyundai,i20' },
+            { id: 13, brand: 'Tata', model: 'Altroz', type: 'Hatchback', fuel: 'Petrol', price: 1300, image: 'https://source.unsplash.com/featured/?Tata,Altroz' },
+            { id: 14, brand: 'Mahindra', model: 'Thar', type: 'SUV', fuel: 'Diesel', price: 2300, image: 'https://source.unsplash.com/featured/?Mahindra,Thar' },
+            { id: 15, brand: 'Honda', model: 'WR-V', type: 'SUV', fuel: 'Petrol', price: 1600, image: 'https://source.unsplash.com/featured/?Honda,WR-V' },
+            { id: 16, brand: 'Maruti Suzuki', model: 'Vitara Brezza', type: 'SUV', fuel: 'Petrol', price: 1700, image: 'https://source.unsplash.com/featured/?MarutiSuzuki,VitaraBrezza' },
+            { id: 17, brand: 'Hyundai', model: 'Verna', type: 'Sedan', fuel: 'Petrol', price: 1800, image: 'https://source.unsplash.com/featured/?Hyundai,Verna' },
+            { id: 18, brand: 'Tata', model: 'Tigor', type: 'Sedan', fuel: 'Petrol', price: 1400, image: 'https://source.unsplash.com/featured/?Tata,Tigor' },
+            { id: 19, brand: 'Mahindra', model: 'XUV300', type: 'SUV', fuel: 'Petrol', price: 1700, image: 'https://source.unsplash.com/featured/?Mahindra,XUV300' },
+            { id: 20, brand: 'Honda', model: 'Jazz', type: 'Hatchback', fuel: 'Petrol', price: 1500, image: 'https://source.unsplash.com/featured/?Honda,Jazz' },
+            // Continue adding more cars...
+        ];
+
+        // Function to create a car card
+        function createCarCard(car) {
+            return `
+                <div class="car-card animate-fade-in-up">
+                    <img src="${car.image}" alt="${car.brand} ${car.model}" class="car-image">
+                    <div class="car-details">
+                        <h3 class="car-title">${car.brand} ${car.model}</h3>
+                        <p class="car-info">${car.type} • ${car.fuel}</p>
+                        <p class="car-price">₹${car.price}/day</p>
+                        <a href="#" class="book-button">Book Now</a>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Function to render car grid
+        function renderCarGrid(carsToRender) {
+            const carGrid = document.querySelector('.car-grid');
+            carGrid.innerHTML = carsToRender.map(createCarCard).join('');
+        }
+
+        // Function to create pagination
+        function createPagination(totalPages, currentPage) {
+            const pagination = document.querySelector('.pagination');
+            pagination.innerHTML = '';
+
+            for (let i = 1; i <= totalPages; i++) {
+                const button = document.createElement('button');
+                button.textContent = i;
+                button.classList.toggle('active', i === currentPage);
+                button.addEventListener('click', () => {
+                    currentPage = i;
+                    const start = (currentPage - 1) * 12;
+                    const end = start + 12;
+                    renderCarGrid(filteredCars.slice(start, end));
+                    createPagination(totalPages, currentPage);
+                });
+                pagination.appendChild(button);
+            }
+        }
+
+        // Filter functionality
+        const filterForm = document.querySelector('.filter-form');
+        let filteredCars = [...cars];
+
+        filterForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const brand = document.getElementById('brand').value;
+            const type = document.getElementById('type').value;
+            const fuel = document.getElementById('fuel').value;
+            const maxPrice = document.getElementById('price').value;
+
+            filteredCars = cars.filter(car => {
+                return (!brand || car.brand === brand) &&
+                       (!type || car.type === type) &&
+                       (!fuel || car.fuel === fuel) &&
+                       (!maxPrice || car.price <= maxPrice);
+            });
+
+            const totalPages = Math.ceil(filteredCars.length / 12);
+            renderCarGrid(filteredCars.slice(0, 12));
+            createPagination(totalPages, 1);
+        });
+
+        // Initial render
+        renderCarGrid(cars.slice(0, 12));
+        createPagination(Math.ceil(cars.length / 12), 1);
+
+        // Scroll animation
+        function animateOnScroll() {
+            const elements = document.querySelectorAll('.animate-fade-in-up, .animate-slide-in-left, .animate-slide-in-right');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 50) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Header scroll effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

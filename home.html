@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE FOR CAR PRO</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #766f6f;
+            overflow-x: hidden;
+        }
+
+        /* Header styles */
+        header {
+            background-color: #1a1a1a;
+            color: #eeeee5;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            transition: background-color 0.3s ease;
+        }
+
+        header.scrolled {
+            background-color: rgba(26, 26, 26, 0.9);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: #f6da06;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin-left: 1.5rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #eb3507;
+        }
+
+        /* Hero section styles */
+        .hero {
+            background-image: url('https://source.unsplash.com/1600x900/?car');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease 0.5s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: #f2ea05;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            animation: fadeInUp 1s ease 1s both;
+        }
+
+        .cta-button:hover {
+            background-color: #af4a2c;
+        }
+
+        /* Services section styles */
+        .services {
+            padding: 5rem 0;
+            background-color: #f4f4f4;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #ff6b6b;
+        }
+
+        .service-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Car showcase section styles */
+        .car-showcase {
+            padding: 5rem 0;
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .car-card {
+            background-color: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .car-card:hover {
+            transform: scale(1.05);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .car-details {
+            padding: 1.5rem;
+        }
+
+        .car-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .car-price {
+            font-size: 1.2rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .car-features {
+            list-style: none;
+            margin-bottom: 1rem;
+        }
+
+        .car-features li {
+            margin-bottom: 0.5rem;
+        }
+
+        .car-button {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        .car-button:hover {
+            background-color: #ff4757;
+        }
+
+        /* Testimonials section styles */
+        .testimonials {
+            padding: 5rem 0;
+            background-color: #f4f4f4;
+        }
+
+        .testimonial-slider {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .testimonial {
+            padding: 2rem;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin: 0 1rem;
+        }
+
+        .testimonial-text {
+            font-size: 1.1rem;
+            font-style: italic;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-author {
+            font-weight: bold;
+        }
+
+        /* Contact section styles */
+        .contact {
+            padding: 5rem 0;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-textarea {
+            height: 150px;
+        }
+
+        .form-submit {
+            display: inline-block;
+            background-color: #ff6b6b;
+            color: #fff;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .form-submit:hover {
+            background-color: #ff4757;
+        }
+
+        /* Footer styles */
+        footer {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 3rem 0;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .footer-section {
+            flex: 1;
+            margin-right: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #663d3d;
+        }
+
+        .social-icons {
+            display: flex;
+            margin-top: 1rem;
+        }
+
+        .social-icons a {
+            color: #fff;
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-icons a:hover {
+            color: #bc2522;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #333;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .animate-fade-in-up {
+            animation: fadeInUp 1s ease;
+        }
+
+        .animate-slide-in-left {
+            animation: slideInLeft 1s ease;
+        }
+
+        .animate-slide-in-right {
+            animation: slideInRight 1s ease;
+        }
+
+        /* Responsive styles */
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .footer-section {
+                flex: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header id="header">
+        <div class="container">
+            <nav>
+                <div class="logo">CAR<span>PRO</span></div>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#cars">Cars</a></li>
+                    <li><a href="#testimonials">Testimonials</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section id="home" class="hero">
+            <div class="hero-content">
+                <h1>Welcome to car pro home </h1>
+                <p>Your one-stop solution for car rental, servicing</p>
+                <a href="#services" class="cta-button">Explore Our Services</a>
+            </div>
+        </section>
+
+        <section id="services" class="services">
+            <div class="container">
+                <h2 class="section-title">Our Services</h2>
+                <div class="services-grid">
+                    <div class="service-card animate-fade-in-up">
+                        <div class="service-icon">🚗</div>
+                        <h3 class="service-title">Car Rental</h3>
+                        <p>Choose from our wide range of vehicles for your perfect ride.</p>
+                    </div>
+                    <div class="service-card animate-fade-in-up" style="animation-delay: 0.2s;">
+                        <div class="service-icon">🔧</div>
+                        <h3 class="service-title">Car Servicing</h3>
+                        <p>Expert maintenance and repair services for all makes and models.</p>
+                    </div>
+                    
+            </div>
+        </section>
+
+        <section id="cars" class="car-showcase">
+            <div class="container">
+                <h2 class="section-title">Featured Cars</h2>
+                <div class="car-grid">
+                    <div class="car-card animate-slide-in-left">
+                        <img src="https://source.unsplash.com/800x600/?car,sedan" alt="Luxury Sedan" class="car-image">
+                        <div class="car-details">
+                            <h3 class="car-title">Luxury Sedan</h3>
+                            <p class="car-price">5000/day or 35,000</p>
+                            <ul class="car-features">
+                                <li>Automatic Transmission</li>
+                                <li>Leather Seats</li>
+                                <li>Advanced Safety Features</li>
+                            </ul>
+                            <a href="#" class="car-button">Rent Now</a>
+                            <a href="#" class="car-button">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="car-card animate-slide-in-left" style="animation-delay: 0.2s;">
+                        <img src="https://source.unsplash.com/800x600/?car,suv" alt="Family SUV" class="car-image">
+                        <div class="car-details">
+                            <h3 class="car-title">Family SUV</h3>
+                            <p class="car-price">6500/day or 42,000</p>
+                            <ul class="car-features">
+                                <li>Spacious Interior</li>
+                                <li>Third-row Seating</li>
+                                <li>Advanced Entertainment System</li>
+                            </ul>
+                            <a href="#" class="car-button">Rent Now</a>
+                            <a href="#" class="car-button">Buy Now</a>
+                        </div>
+                    </div>
+                    <div class="car-card animate-slide-in-left" style="animation-delay: 0.4s;">
+                        <img src="https://source.unsplash.com/800x600/?car,sports" alt="Sports Car" class="car-image">
+                        <div class="car-details">
+                            <h3 class="car-title">Sports Car</h3>
+                            <p class="car-price">10000/day or 75,000</p>
+                            <ul class="car-features">
+                                <li>High-performance Engine</li>
+                                <li>Aerodynamic Design</li>
+                                <li>Premium Sound System</li>
+                            </ul>
+                            <a href="#" class="car-button">Rent Now</a>
+                            <a href="#" class="car-button">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="testimonials" class="testimonials">
+            <div class="container">
+                <h2 class="section-title">What Our Customers Say</h2>
+                <div class="testimonial-slider">
+                    <div class="testimonial animate-fade-in-up">
+                        <p class="testimonial-text">"car pro provided exceptional service for my car rental. The process was smooth, and the vehicle was in perfect condition."</p>
+                        <p class="testimonial-author">- vedant jamdade</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="contact">
+            <div class="container">
+                <h2 class="section-title">Contact Us</h2>
+                <form class="contact-form animate-fade-in-up">
+                    <div class="form-group">
+                        <label for="name" class="form-label">Name</label>
+                        <input type="text" id="name" name="name" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email" class="form-label">Email</label>
+                        <input type="email" id="email" name="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message" class="form-label">Message</label>
+                        <textarea id="message" name="message" class="form-textarea" required></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>About Us</h3>
+                    <p>car pro is your trusted partner for car rental, servicing. We provide top-quality vehicles and services to meet all your automotive needs.</p>
+                </div>
+                <div class="footer-section">
+            
+                   
+                </div>
+                <div class="footer-section">
+                    <h3>Contact Info</h3>
+                    <p> nagpur</p>
+                    <p>Phone:8080785494</p>
+                    <p>Email: thecarpr123@gmail.com</p>
+                    <div class="social-icons">
+                        <a href="#" target="_blank"><i class="fab fa-facebook"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 car pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/js/all.min.js"></script>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Header background change on scroll
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Animate elements on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-fade-in-up, .animate-slide-in-left, .animate-slide-in-right');
+            elements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                if (elementTop < windowHeight - 50) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0)';
+                }
+            });
+        };
+
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+
+        // Simple form validation
+        const contactForm = document.querySelector('.contact-form');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            if (name && email && message) {
+                alert('Thank you for your message. We will get back to you soon!');
+                contactForm.reset();
+            } else {
+                alert('Please fill in all fields.');
+            }
+        });
+
+        // Testimonial slider (simplified version)
+        const testimonials = [
+            {
+                text: "CARPRO provided exceptional service for my car rental. The process was smooth, and the vehicle was in perfect condition.",
+                author: "John Doe"
+            },
+            {
+                text: "I bought my dream car from CARPRO, and the experience was fantastic. Their team was knowledgeable and helpful throughout the process.",
+                author: "Jane Smith"
+            },
+            {
+                text: "The car servicing at AutoElite is top-notch. They always do a great job and keep my car running smoothly.",
+                author: "Mike Johnson"
+            }
+        ];
+
+        let currentTestimonialIndex = 0;
+        const testimonialElement = document.querySelector('.testimonial');
+
+        function updateTestimonial() {
+            const currentTestimonial = testimonials[currentTestimonialIndex];
+            testimonialElement.innerHTML = `
+                <p class="testimonial-text">"${currentTestimonial.text}"</p>
+                <p class="testimonial-author">- ${currentTestimonial.author}</p>
+            `;
+            currentTestimonialIndex = (currentTestimonialIndex + 1) % testimonials.length;
+        }
+
+        setInterval(updateTestimonial, 5000); // Change testimonial every 5 seconds
+    </script>
+</body>
+</html>
